@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-slate-900 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weighplan - Votre Plan de Perte de Poids Sur-Mesure</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans antialiased selection:bg-emerald-500 selection:text-white">
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-40 glass border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-emerald-500/20 p-2 rounded-xl border border-emerald-500/30">
+                    <i data-lucide="scale" class="w-6 h-6 text-emerald-400"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">Weigh<span class="text-emerald-400">plan</span></span>
+            </div>
+            
+            <nav class="hidden md:flex space-x-6 text-sm font-medium text-slate-300">
+                <a href="#diagnostic" class="hover:text-emerald-400 transition">Diagnostic</a>
+                <a href="#dashboard" class="hover:text-emerald-400 transition">Tableau de bord</a>
+                <a href="#meal-plan" class="hover:text-emerald-400 transition">Plan Repas</a>
+            </nav>
+
+            <button onclick="openCheckoutModal()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold px-4 py-2 rounded-xl text-sm shadow-lg shadow-emerald-500/20 transition-all transform hover:scale-105">
+                Accès VIP (19.99€)
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero / Diagnostic Section -->
+    <main class="flex-1">
+        <section id="diagnostic" class="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="bg-emerald-500/10 text-emerald-400 text-xs font-semibold px-3 py-1 rounded-full border border-emerald-500/20 uppercase tracking-wider">Algorithme de Perte de Poids Avancé</span>
+                <h1 class="text-4xl sm:text-5xl font-extrabold mt-4 tracking-tight">Obtenez votre plan de perte de poids <span class="gradient-text">scientifique</span> en 2 minutes</h1>
+                <p class="text-slate-400 mt-3 text-lg">Calculez précisément vos besoins caloriques et découvrez la date exacte où vous atteindrez votre poids idéal.</p>
+            </div>
+
+            <!-- Questionnaire Card -->
+            <div class="glass rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                <form id="calc-form" onsubmit="calculatePlan(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Sexe -->
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Sexe</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="cursor-pointer border border-slate-700 rounded-xl p-3 flex items-center justify-center space-x-2 hover:border-emerald-500 transition has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-500/10">
+                                    <input type="radio" name="gender" value="female" checked class="sr-only">
+                                    <i data-lucide="user" class="w-4 h-4 text-emerald-400"></i>
+                                    <span>Femme</span>
+                                </label>
+                                <label class="cursor-pointer border border-slate-700 rounded-xl p-3 flex items-center justify-center space-x-2 hover:border-emerald-500 transition has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-500/10">
+                                    <input type="radio" name="gender" value="male" class="sr-only">
+                                    <i data-lucide="user-check" class="w-4 h-4 text-emerald-400"></i>
+                                    <span>Homme</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Âge -->
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Âge (ans)</label>
+                            <input type="number" id="age" value="25" required min="15" max="90" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500">
+                        </div>
+
+                        <!-- Taille -->
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Taille (cm)</label>
+                            <input type="number" id="height" value="165" required min="120" max="220" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500">
+                        </div>
+
+                        <!-- Poids Actuel -->
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Poids Actuel (kg)</label>
+                            <input type="number" id="weight" value="75" required min="40" max="200" step="0.1" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500">
+                        </div>
+
+                        <!-- Poids Cible -->
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Poids Cible (kg)</label>
+                            <input type="number" id="targetWeight" value="65" required min="40" max="200" step="0.1" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500">
+                        </div>
+
+                        <!-- Niveau d'activité -->
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Niveau d'activité</label>
+                            <select id="activity" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500">
+                                <option value="1.2">Sédentaire (Peu ou pas d'exercice)</option>
+                                <option value="1.375" selected>Modéré (1-3 séances / semaine)</option>
+                                <option value="1.55">Actif (3-5 séances / semaine)</option>
+                                <option value="1.725">Très actif (Sportif quotidien)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-emerald-500/20 text-lg transition duration-200 flex items-center justify-center space-x-2">
+                        <span>Générer Mon Plan Gratuitement</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Results / Dashboard Section -->
+        <section id="dashboard" class="py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold">Votre Plan d'Action <span class="text-emerald-400">Weighplan</span></h2>
+                <p class="text-slate-400 mt-1">Analyse basée sur vos métriques métaboliques personnalisées</p>
+            </div>
+
+            <!-- Key Stats Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="glass rounded-2xl p-5 border-l-4 border-emerald-500">
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-400 text-sm font-medium">Objectif Journalier</span>
+                        <i data-lucide="flame" class="w-5 h-5 text-emerald-400"></i>
+                    </div>
+                    <div class="mt-2 text-2xl font-black"><span id="targetCalories">1650</span> <span class="text-xs text-slate-400 font-normal">kcal/jour</span></div>
+                    <p class="text-xs text-emerald-400 mt-1">Déficit de -500 kcal inclus</p>
+                </div>
+
+                <div class="glass rounded-2xl p-5 border-l-4 border-blue-500">
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-400 text-sm font-medium">Perte Estimée</span>
+                        <i data-lucide="trending-down" class="w-5 h-5 text-blue-400"></i>
+                    </div>
+                    <div class="mt-2 text-2xl font-black"><span id="weeklyLoss">0.5</span> <span class="text-xs text-slate-400 font-normal">kg/semaine</span></div>
+                    <p class="text-xs text-blue-400 mt-1">Rythme sain & durable</p>
+                </div>
+
+                <div class="glass rounded-2xl p-5 border-l-4 border-purple-500">
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-400 text-sm font-medium">Durée Estimée</span>
+                        <i data-lucide="calendar" class="w-5 h-5 text-purple-400"></i>
+                    </div>
+                    <div class="mt-2 text-2xl font-black"><span id="estimatedWeeks">20</span> <span class="text-xs text-slate-400 font-normal">semaines</span></div>
+                    <p class="text-xs text-purple-400 mt-1">Pour atteindre <span id="targetDisplay">65</span>kg</p>
+                </div>
+
+                <div class="glass rounded-2xl p-5 border-l-4 border-amber-500">
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-400 text-sm font-medium">Hydratation Cible</span>
+                        <i data-lucide="droplet" class="w-5 h-5 text-amber-400"></i>
+                    </div>
+                    <div class="mt-2 text-2xl font-black"><span id="waterTarget">2.5</span> <span class="text-xs text-slate-400 font-normal">L/jour</span></div>
+                    <p class="text-xs text-amber-400 mt-1">Optimal pour le métabolisme</p>
+                </div>
+            </div>
+
+            <!-- Charts & Macros Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Weight Projection Chart -->
+                <div class="glass rounded-3xl p-6 lg:col-span-2">
+                    <h3 class="text-lg font-bold mb-4 flex items-center space-x-2">
+                        <i data-lucide="line-chart" class="w-5 h-5 text-emerald-400"></i>
+                        <span>Courbe d'évolution estimée</span>
+                    </h3>
+                    <div class="h-64">
+                        <canvas id="weightChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Macros Break-down -->
+                <div class="glass rounded-3xl p-6">
+                    <h3 class="text-lg font-bold mb-4 flex items-center space-x-2">
+                        <i data-lucide="pie-chart" class="w-5 h-5 text-emerald-400"></i>
+                        <span>Répartition Macros</span>
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-300">Protéines (30%)</span>
+                                <span class="font-bold text-emerald-400" id="proteinGram">124g</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2">
+                                <div class="bg-emerald-500 h-2 rounded-full" style="width: 30%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-300">Glucides (40%)</span>
+                                <span class="font-bold text-blue-400" id="carbGram">165g</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 40%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-300">Lipides (30%)</span>
+                                <span class="font-bold text-purple-400" id="fatGram">55g</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 30%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Call to action lock -->
+                    <div class="mt-6 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl text-center">
+                        <p class="text-xs text-slate-300">Débloquez vos recettes adaptées & suivi WhatsApp quotidien.</p>
+                        <button onclick="openCheckoutModal()" class="mt-3 w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2 rounded-xl text-xs uppercase tracking-wider transition">
+                            Activer l'Accès VIP
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meal Plan Section -->
+            <div id="meal-plan" class="glass rounded-3xl p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold">Exemple de Plan Repas Détox</h3>
+                        <p class="text-xs text-slate-400">Conçu pour maximiser la satiété tout en brûlant les graisses</p>
+                    </div>
+                    <button onclick="copyShoppingList()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-2 rounded-xl border border-slate-700 flex items-center space-x-2">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                        <span>Copier la liste d'épicerie</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase">Petit-Déjeuner</span>
+                        <h4 class="font-bold mt-1">Omelette Épinards & Féta</h4>
+                        <ul class="text-xs text-slate-400 mt-2 space-y-1">
+                            <li>• 2 œufs entiers + 2 blancs</li>
+                            <li>• Poignée d'épinards frais</li>
+                            <li>• 30g de féta allégée</li>
+                            <li>• 1 thé vert sans sucre</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+                        <span class="text-xs font-semibold text-blue-400 uppercase">Déjeuner</span>
+                        <h4 class="font-bold mt-1">Bowl Poulet & Quinoa</h4>
+                        <ul class="text-xs text-slate-400 mt-2 space-y-1">
+                            <li>• 150g d'escalope de poulet grillé</li>
+                            <li>• 100g de quinoa cuit</li>
+                            <li>• Concombre, tomates & zeste de citron</li>
+                            <li>• 1 cuillère à café d'huile d'olive</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+                        <span class="text-xs font-semibold text-purple-400 uppercase">Dîner</span>
+                        <h4 class="font-bold mt-1">Pavé de Saumon & Courgettes</h4>
+                        <ul class="text-xs text-slate-400 mt-2 space-y-1">
+                            <li>• 120g de saumon au four</li>
+                            <li>• Courgettes poêlées à l'ail</li>
+                            <li>• Salade verte à volonté</li>
+                            <li>• 1 yaourt grec 0%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Paywall / Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="glass rounded-3xl max-w-md w-full p-6 sm:p-8 relative border border-emerald-500/30 shadow-2xl">
+            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="text-center">
+                <span class="bg-amber-500/10 text-amber-400 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/20">🔥 OFFRE DE LANCEMENT (-60%)</span>
+                <h3 class="text-2xl font-extrabold mt-3">Rejoignez le Programme <span class="text-emerald-400">Weighplan VIP</span></h3>
+                <p class="text-xs text-slate-400 mt-2">Débloquez votre plan nutritionnel personnalisé à vie et atteignez vos objectifs rapidement.</p>
+            </div>
+
+            <!-- Features list -->
+            <div class="my-6 space-y-3">
+                <div class="flex items-center space-x-3 text-sm">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+                    <span>Accès complet au générateur de menus</span>
+                </div>
+                <div class="flex items-center space-x-3 text-sm">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+                    <span>Suivi quotidien de la courbe de poids</span>
+                </div>
+                <div class="flex items-center space-x-3 text-sm">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+                    <span>Guide anti-fringales et fiches recettes PDF</span>
+                </div>
+                <div class="flex items-center space-x-3 text-sm">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+                    <span>Support VIP & Mises à jour à vie</span>
+                </div>
+            </div>
+
+            <!-- Price -->
+            <div class="bg-slate-800/60 p-4 rounded-2xl text-center mb-6">
+                <div class="flex items-center justify-center space-x-2">
+                    <span class="text-3xl font-black text-white">19.99€</span>
+                    <span class="text-sm text-slate-500 line-through">49.99€</span>
+                </div>
+                <p class="text-[10px] text-emerald-400 font-medium mt-1">Paiement unique • Aucun abonnement caché</p>
+            </div>
+
+            <!-- Action Button -->
+            <button onclick="processPayment()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-emerald-500/25 transition duration-200 flex items-center justify-center space-x-2">
+                <i data-lucide="lock" class="w-5 h-5"></i>
+                <span>Commander Maintenant (19.99€)</span>
+            </button>
+            <p class="text-[10px] text-center text-slate-500 mt-3">Garantie satisfait ou remboursé 30 jours</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 Weighplan. Tous droits réservés. Conçu pour votre réussite métabolique.</p>
+    </footer>
+
+    <!-- Scripting JS -->
+    <script>
+        lucide.createIcons();
+        let myChart = null;
+
+        function calculatePlan(e) {
+            e.preventDefault();
+            
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const age = parseFloat(document.getElementById('age').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const targetWeight = parseFloat(document.getElementById('targetWeight').value);
+            const activity = parseFloat(document.getElementById('activity').value);
+
+            // BMR Formula (Harris-Benedict)
+            let bmr = (gender === 'female') 
+                ? 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age)
+                : 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+
+            let tdee = bmr * activity;
+            let targetCal = Math.round(tdee - 500);
+
+            let weightDiff = weight - targetWeight;
+            let weeks = Math.max(1, Math.round(weightDiff / 0.5));
+
+            // Update UI
+            document.getElementById('targetCalories').innerText = targetCal;
+            document.getElementById('weeklyLoss').innerText = '0.5';
+            document.getElementById('estimatedWeeks').innerText = weeks;
+            document.getElementById('targetDisplay').innerText = targetWeight;
+            document.getElementById('waterTarget').innerText = (weight * 0.035).toFixed(1);
+
+            // Macros
+            document.getElementById('proteinGram').innerText = Math.round((targetCal * 0.30) / 4) + 'g';
+            document.getElementById('carbGram').innerText = Math.round((targetCal * 0.40) / 4) + 'g';
+            document.getElementById('fatGram').innerText = Math.round((targetCal * 0.30) / 9) + 'g';
+
+            // Show Dashboard
+            document.getElementById('dashboard').classList.remove('hidden');
+            document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
+
+            // Render Chart
+            renderChart(weight, targetWeight, weeks);
+        }
+
+        function renderChart(startW, endW, weeks) {
+            const ctx = document.getElementById('weightChart').getContext('2d');
+            
+            let labels = [];
+            let data = [];
+            let step = (startW - endW) / weeks;
+
+            for(let i = 0; i <= weeks; i++) {
+                labels.push('Semaine ' + i);
+                data.push((startW - (step * i)).toFixed(1));
+            }
+
+            if(myChart) myChart.destroy();
+
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Poids estimé (kg)',
+                        data: data,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        function openCheckoutModal() {
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        function processPayment() {
+            alert("Redirection vers la passerelle de paiement Stripe... (Remplace ce bouton par ton lien Stripe complet)");
+        }
+
+        function copyShoppingList() {
+            const text = "Liste d'épicerie Weighplan:\n- Œufs & Blancs d'œufs\n- Épinards frais & Concombre\n- Féta allégée\n- Escalopes de poulet\n- Saumon frais\n- Quinoa & Courgettes\n- Yaourt grec 0%";
+            navigator.clipboard.writeText(text);
+            alert("Liste de courses copiée dans le presse-papier !");
+        }
+    </script>
+</body>
+</html>
