@@ -1,440 +1,319 @@
 <!DOCTYPE html>
-<html lang="fr" class="h-full bg-slate-900 text-slate-100">
+<html lang="fr" class="h-full bg-slate-950 text-slate-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weighplan - Votre Plan de Perte de Poids Sur-Mesure</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Weighplan - Expert Santé, Nutrition & Transformation Physique</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        emerald: {
-                            500: '#10b981',
-                            600: '#059669',
-                            700: '#047857',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        .glass {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* Arrière-plan thématique Transformation & Santé */
+        body {
+            background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.92)), 
+                        url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
-        .gradient-text {
-            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .glass-card {
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-premium {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(120, 53, 15, 0.3));
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(245, 158, 11, 0.3);
         }
     </style>
 </head>
-<body class="h-full flex flex-col font-sans antialiased selection:bg-emerald-500 selection:text-white">
+<body class="font-sans antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- Header / Navigation -->
-    <header class="sticky top-0 z-40 glass border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
+    <!-- En-tête / Header -->
+    <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
                 <div class="bg-emerald-500/20 p-2 rounded-xl border border-emerald-500/30">
-                    <i data-lucide="scale" class="w-6 h-6 text-emerald-400"></i>
+                    <span class="text-2xl">🌱</span>
                 </div>
-                <span class="text-xl font-bold tracking-tight">Weigh<span class="text-emerald-400">plan</span></span>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight text-white block">Weigh<span class="text-emerald-400">plan</span></span>
+                    <span class="text-xs text-slate-400 hidden sm:block">Coaching Nutritionnel & Sportif</span>
+                </div>
             </div>
-            
-            <nav class="hidden md:flex space-x-6 text-sm font-medium text-slate-300">
-                <a href="#diagnostic" class="hover:text-emerald-400 transition">Diagnostic</a>
-                <a href="#dashboard" class="hover:text-emerald-400 transition">Tableau de bord</a>
-                <a href="#meal-plan" class="hover:text-emerald-400 transition">Plan Repas</a>
-            </nav>
-
-            <button onclick="openCheckoutModal()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold px-4 py-2 rounded-xl text-sm shadow-lg shadow-emerald-500/20 transition-all transform hover:scale-105">
-                Accès VIP (19.99€)
+            <button onclick="openCheckoutModal()" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm transition shadow-lg shadow-emerald-500/20 transform hover:-translate-y-0.5">
+                Rejoindre le Plan VIP 👑
             </button>
         </div>
     </header>
 
-    <!-- Hero / Diagnostic Section -->
-    <main class="flex-1">
-        <section id="diagnostic" class="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-            <div class="text-center mb-10">
-                <span class="bg-emerald-500/10 text-emerald-400 text-xs font-semibold px-3 py-1 rounded-full border border-emerald-500/20 uppercase tracking-wider">Algorithme de Perte de Poids Avancé</span>
-                <h1 class="text-4xl sm:text-5xl font-extrabold mt-4 tracking-tight">Obtenez votre plan de perte de poids <span class="gradient-text">scientifique</span> en 2 minutes</h1>
-                <p class="text-slate-400 mt-3 text-lg">Calculez précisément vos besoins caloriques et découvrez la date exacte où vous atteindrez votre poids idéal.</p>
+    <!-- Contenu Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full space-y-16">
+        
+        <!-- Hero Section -->
+        <section class="text-center space-y-5 max-w-4xl mx-auto">
+            <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest">
+                Programme Scientifique de Perte de Poids & Remise en Forme
+            </span>
+            <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight">
+                Sculptez votre corps, maîtrisez votre <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">nutrition</span>
+            </h1>
+            <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+                Obtenez une analyse personnalisée selon votre morphologie, suivez un plan d'entraînement structuré et optimisez votre santé globale.
+            </p>
+        </section>
+
+        <!-- CALCULATEUR METABOLIQUE INTERACTIF (GRATUIT) -->
+        <section class="glass-card rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-700/60 pb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-emerald-400 flex items-center gap-2">
+                        <span>🧮</span> Calculateur Métabolique & Objectif
+                    </h2>
+                    <p class="text-slate-400 text-sm">Entrez vos données pour obtenir une estimation de vos besoins énergétiques journaliers.</p>
+                </div>
+                <span class="bg-slate-800 text-slate-300 px-3 py-1 rounded-lg text-xs font-medium self-start md:self-auto">Accès Gratuit</span>
             </div>
 
-            <!-- Questionnaire Card -->
-            <div class="glass rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
-                <form id="calc-form" onsubmit="calculatePlan(event)" class="space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <!-- Sexe -->
-                        <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-2">Sexe</label>
-                            <div class="grid grid-cols-2 gap-3">
-                                <label class="cursor-pointer border border-slate-700 rounded-xl p-3 flex items-center justify-center space-x-2 hover:border-emerald-500 transition has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-500/10">
-                                    <input type="radio" name="gender" value="female" checked class="sr-only">
-                                    <i data-lucide="user" class="w-4 h-4 text-emerald-400"></i>
-                                    <span>Femme</span>
-                                </label>
-                                <label class="cursor-pointer border border-slate-700 rounded-xl p-3 flex items-center justify-center space-x-2 hover:border-emerald-500 transition has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-500/10">
-                                    <input type="radio" name="gender" value="male" class="sr-only">
-                                    <i data-lucide="user-check" class="w-4 h-4 text-emerald-400"></i>
-                                    <span>Homme</span>
-                                </label>
-                            </div>
-                        </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Poids Actuel (kg)</label>
+                    <input type="number" id="inputWeight" placeholder="Ex: 75" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-400 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Taille (cm)</label>
+                    <input type="number" id="inputHeight" placeholder="Ex: 175" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-400 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Âge (années)</label>
+                    <input type="number" id="inputAge" placeholder="Ex: 25" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-400 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Objectif Principal</label>
+                    <select id="inputGoal" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-400 text-sm">
+                        <option value="loss">Perte de graisse rapide</option>
+                        <option value="maintain">Maintien & Resserrement musculaire</option>
+                        <option value="gain">Prise de masse sèche</option>
+                    </select>
+                </div>
+            </div>
 
-                        <!-- Âge -->
-                        <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-2">Âge (ans)</label>
-                            <input type="number" id="age" value="25" required min="15" max="90" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500">
-                        </div>
+            <button onclick="calculateMetrics()" class="w-full bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold py-3.5 rounded-xl border border-emerald-500/30 transition text-sm">
+                ⚡ Calculer Mon Bilan Métabolique
+            </button>
 
-                        <!-- Taille -->
-                        <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-2">Taille (cm)</label>
-                            <input type="number" id="height" value="165" required min="120" max="220" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500">
-                        </div>
-
-                        <!-- Poids Actuel -->
-                        <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-2">Poids Actuel (kg)</label>
-                            <input type="number" id="weight" value="75" required min="40" max="200" step="0.1" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500">
-                        </div>
-
-                        <!-- Poids Cible -->
-                        <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-2">Poids Cible (kg)</label>
-                            <input type="number" id="targetWeight" value="65" required min="40" max="200" step="0.1" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500">
-                        </div>
-
-                        <!-- Niveau d'activité -->
-                        <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-2">Niveau d'activité</label>
-                            <select id="activity" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500">
-                                <option value="1.2">Sédentaire (Peu ou pas d'exercice)</option>
-                                <option value="1.375" selected>Modéré (1-3 séances / semaine)</option>
-                                <option value="1.55">Actif (3-5 séances / semaine)</option>
-                                <option value="1.725">Très actif (Sportif quotidien)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-emerald-500/20 text-lg transition duration-200 flex items-center justify-center space-x-2">
-                        <span>Générer Mon Plan Gratuitement</span>
-                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                    </button>
-                </form>
+            <!-- Résultats du calcul -->
+            <div id="resultsArea" class="hidden grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-700/60">
+                <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-700 text-center">
+                    <span class="text-xs text-slate-400 uppercase font-semibold block mb-1">Indice de Masse Corporelle (IMC)</span>
+                    <span id="resIMC" class="text-3xl font-extrabold text-white">--</span>
+                    <span id="labelIMC" class="text-xs block mt-1 text-emerald-400">--</span>
+                </div>
+                <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-700 text-center">
+                    <span class="text-xs text-slate-400 uppercase font-semibold block mb-1">Calories Recommandées / jour</span>
+                    <span id="resCalories" class="text-3xl font-extrabold text-emerald-400">--</span>
+                    <span class="text-xs block mt-1 text-slate-400">Apport journalier estimé</span>
+                </div>
+                <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-700 text-center">
+                    <span class="text-xs text-slate-400 uppercase font-semibold block mb-1">Hydratation Optimale</span>
+                    <span id="resWater" class="text-3xl font-extrabold text-teal-300">--</span>
+                    <span class="text-xs block mt-1 text-slate-400">Litres d'eau / jour</span>
+                </div>
             </div>
         </section>
 
-        <!-- Results / Dashboard Section -->
-        <section id="dashboard" class="py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto hidden">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold">Votre Plan d'Action <span class="text-emerald-400">Weighplan</span></h2>
-                <p class="text-slate-400 mt-1">Analyse basée sur vos métriques métaboliques personnalisées</p>
-            </div>
-
-            <!-- Key Stats Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <div class="glass rounded-2xl p-5 border-l-4 border-emerald-500">
-                    <div class="flex items-center justify-between">
-                        <span class="text-slate-400 text-sm font-medium">Objectif Journalier</span>
-                        <i data-lucide="flame" class="w-5 h-5 text-emerald-400"></i>
-                    </div>
-                    <div class="mt-2 text-2xl font-black"><span id="targetCalories">1650</span> <span class="text-xs text-slate-400 font-normal">kcal/jour</span></div>
-                    <p class="text-xs text-emerald-400 mt-1">Déficit de -500 kcal inclus</p>
+        <!-- SECTION GRATUITE : NUTRITION DE BASE & EXERCICES PAR MORPHOTYPE -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Guide Alimentaire Essentiel -->
+            <section class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">🥗</span>
+                    <h3 class="text-xl font-bold text-white">Fondamentaux de l'Alimentation Équilibrée</h3>
                 </div>
-
-                <div class="glass rounded-2xl p-5 border-l-4 border-blue-500">
-                    <div class="flex items-center justify-between">
-                        <span class="text-slate-400 text-sm font-medium">Perte Estimée</span>
-                        <i data-lucide="trending-down" class="w-5 h-5 text-blue-400"></i>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    Une transformation physique réussie repose à 70% sur la qualité des nutriments apportés à l'organisme :
+                </p>
+                <div class="space-y-4 text-sm">
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1">
+                        <h4 class="font-bold text-emerald-400 flex items-center justify-between">
+                            <span>🥩 Protéines Maigres</span>
+                            <span class="text-xs font-normal text-slate-400">Reconstruction musculaire</span>
+                        </h4>
+                        <p class="text-slate-300 text-xs">Blancs de poulet/dinde, œufs durs ou pochés, poissons blancs (cabillaud, colin), tofu, thon au naturel.</p>
                     </div>
-                    <div class="mt-2 text-2xl font-black"><span id="weeklyLoss">0.5</span> <span class="text-xs text-slate-400 font-normal">kg/semaine</span></div>
-                    <p class="text-xs text-blue-400 mt-1">Rythme sain & durable</p>
-                </div>
-
-                <div class="glass rounded-2xl p-5 border-l-4 border-purple-500">
-                    <div class="flex items-center justify-between">
-                        <span class="text-slate-400 text-sm font-medium">Durée Estimée</span>
-                        <i data-lucide="calendar" class="w-5 h-5 text-purple-400"></i>
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1">
+                        <h4 class="font-bold text-emerald-400 flex items-center justify-between">
+                            <span>🥑 Lipides Essentiels</span>
+                            <span class="text-xs font-normal text-slate-400">Régulation hormonale</span>
+                        </h4>
+                        <p class="text-slate-300 text-xs">Huile d'olive extra-vierge, avocats, amandes brutes, graines de chia et de lin, beurre de cacahuète pur.</p>
                     </div>
-                    <div class="mt-2 text-2xl font-black"><span id="estimatedWeeks">20</span> <span class="text-xs text-slate-400 font-normal">semaines</span></div>
-                    <p class="text-xs text-purple-400 mt-1">Pour atteindre <span id="targetDisplay">65</span>kg</p>
-                </div>
-
-                <div class="glass rounded-2xl p-5 border-l-4 border-amber-500">
-                    <div class="flex items-center justify-between">
-                        <span class="text-slate-400 text-sm font-medium">Hydratation Cible</span>
-                        <i data-lucide="droplet" class="w-5 h-5 text-amber-400"></i>
-                    </div>
-                    <div class="mt-2 text-2xl font-black"><span id="waterTarget">2.5</span> <span class="text-xs text-slate-400 font-normal">L/jour</span></div>
-                    <p class="text-xs text-amber-400 mt-1">Optimal pour le métabolisme</p>
-                </div>
-            </div>
-
-            <!-- Charts & Macros Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                <!-- Weight Projection Chart -->
-                <div class="glass rounded-3xl p-6 lg:col-span-2">
-                    <h3 class="text-lg font-bold mb-4 flex items-center space-x-2">
-                        <i data-lucide="line-chart" class="w-5 h-5 text-emerald-400"></i>
-                        <span>Courbe d'évolution estimée</span>
-                    </h3>
-                    <div class="h-64">
-                        <canvas id="weightChart"></canvas>
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1">
+                        <h4 class="font-bold text-emerald-400 flex items-center justify-between">
+                            <span>🥦 Glucides Complexe & Fibres</span>
+                            <span class="text-xs font-normal text-slate-400">Énergie durable</span>
+                        </h4>
+                        <p class="text-slate-300 text-xs">Flocons d'avoine complets, patates douces, riz complet ou basmati, épinards, brocolis, concombres.</p>
                     </div>
                 </div>
+            </section>
 
-                <!-- Macros Break-down -->
-                <div class="glass rounded-3xl p-6">
-                    <h3 class="text-lg font-bold mb-4 flex items-center space-x-2">
-                        <i data-lucide="pie-chart" class="w-5 h-5 text-emerald-400"></i>
-                        <span>Répartition Macros</span>
-                    </h3>
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="text-slate-300">Protéines (30%)</span>
-                                <span class="font-bold text-emerald-400" id="proteinGram">124g</span>
-                            </div>
-                            <div class="w-full bg-slate-800 rounded-full h-2">
-                                <div class="bg-emerald-500 h-2 rounded-full" style="width: 30%"></div>
-                            </div>
+            <!-- Entraînement par Morphologie -->
+            <section class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">🏋️‍♂️</span>
+                    <h3 class="text-xl font-bold text-white">Programme Sportif par Morphotype</h3>
+                </div>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    Adaptez l'intensité et le volume d'exercice à la structure naturelle de votre corps :
+                </p>
+                <div class="space-y-4 text-sm">
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold text-teal-300">Ectomorphe (Structure Mince)</h4>
+                            <span class="text-xs bg-teal-500/10 text-teal-400 px-2 py-0.5 rounded border border-teal-500/20">Prise de Volume</span>
                         </div>
-
-                        <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="text-slate-300">Glucides (40%)</span>
-                                <span class="font-bold text-blue-400" id="carbGram">165g</span>
-                            </div>
-                            <div class="w-full bg-slate-800 rounded-full h-2">
-                                <div class="bg-blue-500 h-2 rounded-full" style="width: 40%"></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="text-slate-300">Lipides (30%)</span>
-                                <span class="font-bold text-purple-400" id="fatGram">55g</span>
-                            </div>
-                            <div class="w-full bg-slate-800 rounded-full h-2">
-                                <div class="bg-purple-500 h-2 rounded-full" style="width: 30%"></div>
-                            </div>
-                        </div>
+                        <p class="text-slate-300 text-xs">Séances courtes et intenses (45 min max). Développé couché, squats avec poids, tirage vertical. 3 à 4 séries de 8 à 10 répétitions. Repos long (2 min).</p>
                     </div>
-
-                    <!-- Call to action lock -->
-                    <div class="mt-6 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl text-center">
-                        <p class="text-xs text-slate-300">Débloquez vos recettes adaptées & suivi WhatsApp quotidien.</p>
-                        <button onclick="openCheckoutModal()" class="mt-3 w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2 rounded-xl text-xs uppercase tracking-wider transition">
-                            Activer l'Accès VIP
-                        </button>
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold text-emerald-400">Mésomorphe (Structure Athlétique)</h4>
+                            <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">Renforcement & Découpe</span>
+                        </div>
+                        <p class="text-slate-300 text-xs">Entraînement hybride (Musculation + HIIT). Circuits fonctionnels, tractions, fentes marchées, pompes. 4 séries de 12 répétitions. Repos court (60 sec).</p>
                     </div>
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold text-amber-400">Endomorphe (Tendance à stocker)</h4>
+                            <span class="text-xs bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded border border-amber-500/20">Brûlage de Graisses</span>
+                        </div>
+                        <p class="text-slate-300 text-xs">Cardio modéré prolongé (45 min marche rapide ou vélo) combiné à du super-set léger. Corde à sauter, burpees, gainage abdominal. Repos très court (30 sec).</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- SECTION PREMIUM / VIP (OFFRE EXCLUSIVE) -->
+        <section class="glass-premium rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden space-y-10">
+            
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="space-y-2">
+                    <span class="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-widest">
+                        Programme VIP Intégral & Chrononutrition
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-white">
+                        Débloquez l'Accompagnement Avancé 👑
+                    </h2>
+                </div>
+                <div class="text-left md:text-right">
+                    <span class="text-xs text-slate-400 block uppercase font-bold">Accès à vie</span>
+                    <span class="text-3xl font-black text-amber-400">Offre Spéciale</span>
                 </div>
             </div>
 
-            <!-- Meal Plan Section -->
-            <div id="meal-plan" class="glass rounded-3xl p-6 sm:p-8">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                    <div>
-                        <h3 class="text-xl font-bold">Exemple de Plan Repas Détox</h3>
-                        <p class="text-xs text-slate-400">Conçu pour maximiser la satiété tout en brûlant les graisses</p>
-                    </div>
-                    <button onclick="copyShoppingList()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-2 rounded-xl border border-slate-700 flex items-center space-x-2">
-                        <i data-lucide="copy" class="w-4 h-4"></i>
-                        <span>Copier la liste d'épicerie</span>
-                    </button>
+            <p class="text-slate-200 text-sm sm:text-base leading-relaxed max-w-3xl">
+                Le programme gratuit donne les bases, mais la section Premium débloque la stratégie exacte qui accélère la perte de masse grasse et optimise la régulation hormonale au quotidien.
+            </p>
+
+            <!-- Détails du contenu Premium -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <div class="bg-slate-900/80 p-5 rounded-2xl border border-amber-500/20 space-y-3">
+                    <div class="text-3xl">⏰</div>
+                    <h4 class="font-bold text-white text-base">Horaires des Repas</h4>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Planning de chrononutrition heure par heure (7h30, 12h30, 16h30, 19h30) pour aligner vos repas sur la sécrétion d'insuline et stopper le stockage.
+                    </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
-                        <span class="text-xs font-semibold text-emerald-400 uppercase">Petit-Déjeuner</span>
-                        <h4 class="font-bold mt-1">Omelette Épinards & Féta</h4>
-                        <ul class="text-xs text-slate-400 mt-2 space-y-1">
-                            <li>• 2 œufs entiers + 2 blancs</li>
-                            <li>• Poignée d'épinards frais</li>
-                            <li>• 30g de féta allégée</li>
-                            <li>• 1 thé vert sans sucre</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
-                        <span class="text-xs font-semibold text-blue-400 uppercase">Déjeuner</span>
-                        <h4 class="font-bold mt-1">Bowl Poulet & Quinoa</h4>
-                        <ul class="text-xs text-slate-400 mt-2 space-y-1">
-                            <li>• 150g d'escalope de poulet grillé</li>
-                            <li>• 100g de quinoa cuit</li>
-                            <li>• Concombre, tomates & zeste de citron</li>
-                            <li>• 1 cuillère à café d'huile d'olive</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
-                        <span class="text-xs font-semibold text-purple-400 uppercase">Dîner</span>
-                        <h4 class="font-bold mt-1">Pavé de Saumon & Courgettes</h4>
-                        <ul class="text-xs text-slate-400 mt-2 space-y-1">
-                            <li>• 120g de saumon au four</li>
-                            <li>• Courgettes poêlées à l'ail</li>
-                            <li>• Salade verte à volonté</li>
-                            <li>• 1 yaourt grec 0%</li>
-                        </ul>
-                    </div>
+                <div class="bg-slate-900/80 p-5 rounded-2xl border border-amber-500/20 space-y-3">
+                    <div class="text-3xl">😴</div>
+                    <h4 class="font-bold text-white text-base">Sommeil & Hormones</h4>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Guide complet sur la régulation de la leptine et de la ghréline (hormones de la faim), ainsi que l'optimisation des fenêtres de sommeil réparateur (7h-8h).
+                    </p>
                 </div>
+
+                <div class="bg-slate-900/80 p-5 rounded-2xl border border-amber-500/20 space-y-3">
+                    <div class="text-3xl">🥑</div>
+                    <h4 class="font-bold text-white text-base">Plan Nutritionnel Jour/Jour</h4>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Recettes détaillées, portions Gramme-par-Gramme, alternatives gourmandes et astuces anti-fringales pour ne jamais ressentir la faim.
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/80 p-5 rounded-2xl border border-amber-500/20 space-y-3">
+                    <div class="text-3xl">🔥</div>
+                    <h4 class="font-bold text-white text-base">Routine Sport Avancée</h4>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Vidéos démos, guides de postures, programmes de renforcement du buste, affinement de la taille et équilibre musculaire.
+                    </p>
+                </div>
+
             </div>
+
+            <!-- Bouton d'action principal -->
+            <div class="text-center pt-4">
+                <button onclick="openCheckoutModal()" class="w-full sm:w-auto bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black px-10 py-5 rounded-2xl text-lg transition shadow-2xl shadow-amber-500/30 transform hover:-translate-y-1">
+                    Débloquer le Plan VIP Maintenant 🚀
+                </button>
+                <p class="text-slate-400 text-xs mt-3">Paiement 100% Sécurisé via Gumroad • Accès Immédiat</p>
+            </div>
+
         </section>
+
     </main>
 
-    <!-- Paywall / Checkout Modal -->
-    <div id="checkoutModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="glass rounded-3xl max-w-md w-full p-6 sm:p-8 relative border border-emerald-500/30 shadow-2xl">
-            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
-                <i data-lucide="x" class="w-6 h-6"></i>
+    <!-- Pied de page / Footer -->
+    <footer class="border-t border-slate-800 bg-slate-950 py-8 text-center text-slate-500 text-xs">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p class="font-medium text-slate-400">Weighplan © 2026 - Tous droits réservés.</p>
+            <p>Ce programme ne remplace pas un avis médical professionnel.</p>
+        </div>
+    </footer>
+
+    <!-- FENETRE MODALE DE COMMANDE -->
+    <div id="checkoutModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-6 shadow-2xl relative">
+            <button onclick="closeCheckoutModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-2xl font-bold">
+                ✕
             </button>
-
-            <div class="text-center">
-                <span class="bg-amber-500/10 text-amber-400 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/20">🔥 OFFRE DE LANCEMENT (-60%)</span>
-                <h3 class="text-2xl font-extrabold mt-3">Rejoignez le Programme <span class="text-emerald-400">Weighplan VIP</span></h3>
-                <p class="text-xs text-slate-400 mt-2">Débloquez votre plan nutritionnel personnalisé à vie et atteignez vos objectifs rapidement.</p>
+            <div class="text-center space-y-3">
+                <div class="bg-amber-500/20 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto border border-amber-500/30">
+                    <span class="text-3xl">👑</span>
+                </div>
+                <h3 class="text-2xl font-extrabold text-white">Finaliser votre Accès VIP</h3>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    Vous allez être redirigé vers la plateforme de paiement sécurisée pour débloquer immédiatement votre programme complet.
+                </p>
             </div>
 
-            <!-- Features list -->
-            <div class="my-6 space-y-3">
-                <div class="flex items-center space-x-3 text-sm">
-                    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
-                    <span>Accès complet au générateur de menus</span>
+            <div class="bg-slate-950/60 p-4 rounded-2xl border border-slate-800 space-y-3 text-sm">
+                <div class="flex justify-between items-center text-slate-300">
+                    <span>Programme VIP Weighplan</span>
+                    <span class="font-bold text-amber-400">Accès Instantané</span>
                 </div>
-                <div class="flex items-center space-x-3 text-sm">
-                    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
-                    <span>Suivi quotidien de la courbe de poids</span>
+                <div class="flex justify-between items-center text-slate-300">
+                    <span>Support & Guides</span>
+                    <span class="font-bold text-emerald-400">Inclus</span>
                 </div>
-                <div class="flex items-center space-x-3 text-sm">
-                    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
-                    <span>Guide anti-fringales et fiches recettes PDF</span>
-                </div>
-                <div class="flex items-center space-x-3 text-sm">
-                    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
-                    <span>Support VIP & Mises à jour à vie</span>
+                <div class="border-t border-slate-800 pt-2 flex justify-between items-center text-white font-bold">
+                    <span>Paiement Sécurisé</span>
+                    <span class="text-xs bg-slate-800 px-2 py-1 rounded text-slate-400">CIH Bank / Card via Gumroad</span>
                 </div>
             </div>
 
-            <!-- Price -->
-            <div class="bg-slate-800/60 p-4 rounded-2xl text-center mb-6">
-                <div class="flex items-center justify-center space-x-2">
-                    <span class="text-3xl font-black text-white">19.99€</span>
-                    <span class="text-sm text-slate-500 line-through">49.99€</span>
-                </div>
-                <p class="text-[10px] text-emerald-400 font-medium mt-1">Paiement unique • Aucun abonnement caché</p>
-            </div>
-
-            <!-- Action Button -->
-            <button onclick="processPayment()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-emerald-500/25 transition duration-200 flex items-center justify-center space-x-2">
-                <i data-lucide="lock" class="w-5 h-5"></i>
-                <span>Commander Maintenant (19.99€)</span>
+            <button onclick="processPayment()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-4 rounded-xl text-base transition shadow-xl shadow-emerald-500/20">
+                Commander Maintenant 💳
             </button>
-            <p class="text-[10px] text-center text-slate-500 mt-3">Garantie satisfait ou remboursé 30 jours</p>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="glass border-t border-slate-800 py-6 text-center text-xs text-slate-500">
-        <p>© 2026 Weighplan. Tous droits réservés. Conçu pour votre réussite métabolique.</p>
-    </footer>
-
-    <!-- Scripting JS -->
+    <!-- JAVASCRIPT -->
     <script>
-        lucide.createIcons();
-        let myChart = null;
-
-        function calculatePlan(e) {
-            e.preventDefault();
-            
-            const gender = document.querySelector('input[name="gender"]:checked').value;
-            const age = parseFloat(document.getElementById('age').value);
-            const height = parseFloat(document.getElementById('height').value);
-            const weight = parseFloat(document.getElementById('weight').value);
-            const targetWeight = parseFloat(document.getElementById('targetWeight').value);
-            const activity = parseFloat(document.getElementById('activity').value);
-
-            // BMR Formula (Harris-Benedict)
-            let bmr = (gender === 'female') 
-                ? 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age)
-                : 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
-
-            let tdee = bmr * activity;
-            let targetCal = Math.round(tdee - 500);
-
-            let weightDiff = weight - targetWeight;
-            let weeks = Math.max(1, Math.round(weightDiff / 0.5));
-
-            // Update UI
-            document.getElementById('targetCalories').innerText = targetCal;
-            document.getElementById('weeklyLoss').innerText = '0.5';
-            document.getElementById('estimatedWeeks').innerText = weeks;
-            document.getElementById('targetDisplay').innerText = targetWeight;
-            document.getElementById('waterTarget').innerText = (weight * 0.035).toFixed(1);
-
-            // Macros
-            document.getElementById('proteinGram').innerText = Math.round((targetCal * 0.30) / 4) + 'g';
-            document.getElementById('carbGram').innerText = Math.round((targetCal * 0.40) / 4) + 'g';
-            document.getElementById('fatGram').innerText = Math.round((targetCal * 0.30) / 9) + 'g';
-
-            // Show Dashboard
-            document.getElementById('dashboard').classList.remove('hidden');
-            document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
-
-            // Render Chart
-            renderChart(weight, targetWeight, weeks);
-        }
-
-        function renderChart(startW, endW, weeks) {
-            const ctx = document.getElementById('weightChart').getContext('2d');
-            
-            let labels = [];
-            let data = [];
-            let step = (startW - endW) / weeks;
-
-            for(let i = 0; i <= weeks; i++) {
-                labels.push('Semaine ' + i);
-                data.push((startW - (step * i)).toFixed(1));
-            }
-
-            if(myChart) myChart.destroy();
-
-            myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Poids estimé (kg)',
-                        data: data,
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } },
-                        x: { grid: { display: false } }
-                    }
-                }
-            });
-        }
-
+        // Ouverture / Fermeture Modale
         function openCheckoutModal() {
             document.getElementById('checkoutModal').classList.remove('hidden');
         }
@@ -443,14 +322,50 @@
             document.getElementById('checkoutModal').classList.add('hidden');
         }
 
+        // Redirection vers Gumroad
         function processPayment() {
-    window.location.href = "https://gloriacocci.gumroad.com/l/oqyrev";
-}
+            window.location.href = "https://gloriacocci.gumroad.com/l/oqyrev";
+        }
 
-        function copyShoppingList() {
-            const text = "Liste d'épicerie Weighplan:\n- Œufs & Blancs d'œufs\n- Épinards frais & Concombre\n- Féta allégée\n- Escalopes de poulet\n- Saumon frais\n- Quinoa & Courgettes\n- Yaourt grec 0%";
-            navigator.clipboard.writeText(text);
-            alert("Liste de courses copiée dans le presse-papier !");
+        // Calculateur Métabolique Interactif
+        function calculateMetrics() {
+            const weight = parseFloat(document.getElementById('inputWeight').value);
+            const height = parseFloat(document.getElementById('inputHeight').value);
+            const age = parseFloat(document.getElementById('inputAge').value);
+            const goal = document.getElementById('inputGoal').value;
+
+            if (!weight || !height || !age) {
+                alert("Veuillez remplir votre poids, votre taille et votre âge.");
+                return;
+            }
+
+            // Calcul de l'IMC
+            const heightMeters = height / 100;
+            const imc = (weight / (heightMeters * heightMeters)).toFixed(1);
+            document.getElementById('resIMC').innerText = imc;
+
+            let label = "";
+            if (imc < 18.5) label = "Poids léger";
+            else if (imc < 25) label = "Poids idéal";
+            else if (imc < 30) label = "Surpoids modéré";
+            else label = "Surpoids important";
+            document.getElementById('labelIMC').innerText = label;
+
+            // Calcul du métabolisme de base (Formule de Mifflin-St Jeor)
+            let bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+            let calories = bmr * 1.375; // Niveau d'activité modéré
+
+            if (goal === 'loss') calories -= 400;
+            else if (goal === 'gain') calories += 350;
+
+            document.getElementById('resCalories').innerText = Math.round(calories) + " kcal";
+
+            // Calcul de l'eau
+            const water = (weight * 0.035).toFixed(1);
+            document.getElementById('resWater').innerText = water + " L";
+
+            // Affichage de la zone de résultats
+            document.getElementById('resultsArea').classList.remove('hidden');
         }
     </script>
 </body>
